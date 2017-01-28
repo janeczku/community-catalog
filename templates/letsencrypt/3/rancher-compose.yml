@@ -1,8 +1,8 @@
 .catalog:
   name: Let's Encrypt
-  version: 0.3.0
+  version: 0.4.0
   description: Trusted SSL certificates at zero cost
-  minimum_rancher_version: v0.63.0
+  minimum_rancher_version: v1.2.0-pre4-rc1
   questions:
     - variable: EULA
       label: I Agree to the Let's Encrypt TOS
@@ -64,17 +64,16 @@
       default: 12
       required: true
       type: int
-    - variable: STORAGE_VOLUME
-      label: Storage Volume
+    - variable: STORAGE_DRIVER
+      label: Volume Storage Driver (Optional)
       description: |
-        Certificate and private key can optionally be saved to a host path, named volume
-        or Convoy storage volume. Enter host path or volume name suffixed with a colon (:).
-        E.g: `/etc/certs:`.
+        If you enter the name of an existing storage driver (see `Infrastructure -> Storage`) then a stack scoped storage volume named `lets-encrypt`
+        will be created or used to store account data, certificates and private keys.
       required: false
       type: string
     - variable: PROVIDER
-      label: DNS Provider
-      description: Select the DNS provider used for domain verification.
+      label: Domain Validation Method
+      description: Select a DNS provider to use for domain validation. Use 'HTTP' if DNS for the domain is not hosted with any of the providers.
       required: true
       type: enum
       options:
@@ -82,15 +81,18 @@
         - DigitalOcean
         - DNSimple
         - Dyn
-        - Namecheap
+        - Gandi
+        - HTTP
+        - Ovh
         - Route53
+        - Vultr
     - variable: AWS_ACCESS_KEY
-      label: AWS Access Key Id
+      label: AWS Route53 Access Key Id
       description: Enter the Access Key Id for your AWS account.
       type: string
       required: false
     - variable: AWS_SECRET_KEY
-      label: AWS Secret Access Key
+      label: AWS Route53 Secret Access Key
       description: Enter the Secret Access Key for your AWS account.
       type: string
       required: false
@@ -132,5 +134,30 @@
     - variable: DYN_PASSWORD
       label: Dyn Password
       description: Enter your Dyn password.
+      type: string
+      required: false
+    - variable: GANDI_API_KEY
+      label: Gandi API Key
+      description: Enter the API key for your Gandi account.
+      type: string
+      required: false
+    - variable: OVH_APPLICATION_KEY
+      label: OVH Application Key
+      description: Enter your OVH application key.
+      type: string
+      required: false
+    - variable: OVH_APPLICATION_SECRET
+      label: OVH Application Secret
+      description: Enter your OVH application secret.
+      type: string
+      required: false
+    - variable: OVH_CONSUMER_KEY
+      label: OVH Consumer Key
+      description: Enter your OVH consumer key.
+      type: string
+      required: false
+    - variable: VULTR_API_KEY
+      label: Vultr API Key
+      description: Enter the API key for your Vultr account.
       type: string
       required: false
