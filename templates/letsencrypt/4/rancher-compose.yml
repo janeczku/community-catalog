@@ -1,6 +1,6 @@
 .catalog:
   name: Let's Encrypt
-  version: 0.4.0
+  version: 0.4.1
   description: Trusted SSL certificates at zero cost
   minimum_rancher_version: v1.2.0-pre4-rc1
   questions:
@@ -67,22 +67,32 @@
     - variable: STORAGE_DRIVER
       label: Volume Storage Driver (Optional)
       description: |
-        If you enter the name of an existing storage driver (see `Infrastructure -> Storage`) then a stack scoped storage volume named `lets-encrypt`
-        will be created or used to store account data, certificates and private keys.
+        If you enter the name of an existing storage driver (see `Infrastructure -> Storage`) then account data,
+        certificates and private keys will be stored in a stack scoped storage volume named `lets-encrypt`.
       required: false
       type: string
+    - variable: STORAGE_DRIVER_EBS_VOL_SIZE
+      label: EBS Volume Size in GiB
+      description: |
+        If you are using the `rancher-ebs` storage driver you need to specify the size of the volume to create (min: 1 GiB).
+      required: false
+      type: int
     - variable: PROVIDER
       label: Domain Validation Method
-      description: Select a DNS provider to use for domain validation. Use 'HTTP' if DNS for the domain is not hosted with any of the providers.
+      description: |
+        Select a DNS provider to use for domain validation. Use 'HTTP' if DNS for the domain is not hosted
+        with any of the available providers.
       required: true
       type: enum
       options:
+        - Azure
         - CloudFlare
         - DigitalOcean
         - DNSimple
         - Dyn
         - Gandi
         - HTTP
+        - NS1
         - Ovh
         - Route53
         - Vultr
@@ -94,6 +104,31 @@
     - variable: AWS_SECRET_KEY
       label: AWS Route53 Secret Access Key
       description: Enter the Secret Access Key for your AWS account.
+      type: string
+      required: false
+    - variable: AZURE_CLIENT_ID
+      label: Azure Client ID
+      description: Enter the Client ID from your Azure account.
+      type: string
+      required: false
+    - variable: AZURE_CLIENT_SECRET
+      label: Azure Client Secret
+      description: Enter the Client Secret from your Azure account.
+      type: string
+      required: false
+    - variable: AZURE_SUBSCRIPTION_ID
+      label: Azure Subscription ID
+      description: Enter the Subscription ID from your Azure account.
+      type: string
+      required: false
+    - variable: AZURE_TENANT_ID
+      label: Azure Tenant ID
+      description: Enter the Tenant ID from your Azure account.
+      type: string
+      required: false
+    - variable: AZURE_RESOURCE_GROUP
+      label: Azure Resource Group
+      description: Enter the Resource Group from your Azure account.
       type: string
       required: false
     - variable: CLOUDFLARE_EMAIL
@@ -139,6 +174,11 @@
     - variable: GANDI_API_KEY
       label: Gandi API Key
       description: Enter the API key for your Gandi account.
+      type: string
+      required: false
+    - variable: NS1_API_KEY
+      label: NS1 API Key
+      description: Enter your NS1 API key.
       type: string
       required: false
     - variable: OVH_APPLICATION_KEY

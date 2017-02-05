@@ -15,7 +15,8 @@ If you want the certificate to be automatically renewed, leave the service runni
 
 ### Using persistent storage volume
 
-If you specify an existing volume storage driver (e.g. rancher-nfs) then the account data, certificate and private key will be stored in a stack scoped volume named `lets-encrypt`, allowing you to access them from other services in the same stack. See the [Storage Service documentation](https://docs.rancher.com/rancher/v1.3/en/rancher-services/storage-service/).
+If you specify an existing volume storage driver (e.g. rancher-nfs) then the account data, certificate and private key will be stored in a stack scoped volume named `lets-encrypt`, allowing you to access them from other services in the same stack as this service. See the [Storage Service documentation](https://docs.rancher.com/rancher/v1.3/en/rancher-services/storage-service/).    
+Note: When using the `rancher-ebs` storage driver, you will need to specify the size of the volume (in GB) when deploying this service for the first time.
 
 #### Example
 
