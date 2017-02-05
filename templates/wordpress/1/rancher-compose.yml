@@ -1,16 +1,27 @@
 .catalog:
   name: "Wordpress"
-  version: "v0.1-educaas1"
+  version: "v0.2"
   description: "Blog tool, publishing platform and CMS"
-  uuid: Wordpress-0
   minimum_rancher_version: v0.51.0
-  questions:    
-    - variable: public_port
-      description: "public port to access the wordpress site"
+  questions:
+    - variable: "public_port"
+      description: "Public port to access the Wordpress site"
       label: "Public Port"
       required: true
       default: "80"
       type: "int"
-
-
-wordpress:
+    - variable: "mysql_root_password"
+      description: "Choose the MySQL root password"
+      label: "MySQL root password"
+      required: true
+      default: "wordpress"
+      type: "string"
+    - variable: "innodb_buffer_pool_size"
+      description: "Optionally tweak the InnoDB buffer pool size configuration setting"
+      label: "MySQL InnoDB Buffer Pool Size"
+      required: true
+      default: "8M"
+      type: "string"
+db:
+  scale: 1
+  retain_ip: true

@@ -6,6 +6,8 @@ wordpress:
     - ${public_port}:80
 
 db:
-  image: mariadb
+  image: webhippie/mariadb
   environment:
-    MYSQL_ROOT_PASSWORD: example
+    MYSQL_ROOT_PASSWORD: ${mysql_root_password}
+    MARIADB_ROOT_PASSWORD: ${mysql_root_password}
+    MARIADB_INNODB_BUFFER_POOL_SIZE: ${innodb_buffer_pool_size}
